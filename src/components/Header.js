@@ -10,8 +10,8 @@ const Header = () => {
             <Nav className='ml-auto'>
                 <Nav.Link href='/'>ホーム</Nav.Link>
                 <Nav.Link href='/news'>お知らせ</Nav.Link>
-                <Nav.Link href='/sign-up'>サインアップ</Nav.Link>
-                <Nav.Link href='/log-in'>ログイン</Nav.Link>
+                <Nav.Link href='/signup'>サインアップ</Nav.Link>
+                <Nav.Link href='/login'>ログイン</Nav.Link>
             </Nav>
         </Navbar.Collapse>
     </Navbar>
