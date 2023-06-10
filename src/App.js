@@ -5,20 +5,21 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from "./components/HomePage";
 import Login from './components/Login';
+import { AuthProvider } from './AuthContext';
 
 function App() {
   return (
     <div className="App bg-light">
-      <Header/>
-    
       <Router>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
+        <AuthProvider>
+          <Header/>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<Login />} />
+            </Routes>
+          <Footer/>
+        </AuthProvider>
       </Router>
-
-      <Footer/>
     </div>
   );
 }
