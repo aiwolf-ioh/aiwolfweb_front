@@ -14,7 +14,6 @@ const Login = ({ location }) => {
   // 送信したときに呼ばれる関数
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("mail:%s", email);
     //リクエストに付加するヘッダーの定義
     const headers = {
       "Content-Type": "application/json",
@@ -71,7 +70,7 @@ const Login = ({ location }) => {
         style={{ width: "26rem", height: "16rem" }}
       >
         <Card.Body>
-          <Card.Title className="font-weight-normal mb-4 mt-3">
+          <Card.Title className="font-weight-normal mt-3">
             ログイン
           </Card.Title>
           <Form style={{ width: "18rem" }}>
@@ -101,6 +100,9 @@ const Login = ({ location }) => {
             </Button>
           </Form>
         </Card.Body>
+        <a href="/signup" className="mb-4">
+        利用が初めての方はこちら
+        </a>
       </Card>
     </Container>
   );
