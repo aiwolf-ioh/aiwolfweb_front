@@ -64,7 +64,7 @@ const Signup = () => {
           <Card.Title className="font-weight-normal mb-4 mt-3">
             サインアップ
           </Card.Title>
-          <Form style={{ width: '18rem' }} onSubmit={handleSubmit}>
+          <Form style={{ width: '18rem' }}>
             <Form.Group controlId="name">
               <Form.Control
                 type="text"
@@ -109,6 +109,7 @@ const Signup = () => {
               variant="primary"
               type="submit"
               className="rounded-pill mt-3"
+              onClick={handleSubmit}
             >
               登録
             </Button>
