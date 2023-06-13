@@ -3,12 +3,14 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Alert, Button, Card, Container, Form } from "react-bootstrap";
 import { AuthContext } from "../AuthContext";
+import { setAlertContext } from "../AlertContext";
 
 const Login = ({ location }) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { isLoggedIn, login } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
+  const { setShowAlert, setAlertMessage, setAlertType } = useContext(setAlertContext);
   const [loginFailed, setLoginFailed] = useState(false);
 
   // 送信したときに呼ばれる関数
@@ -30,15 +32,21 @@ const Login = ({ location }) => {
         login();
         setLoginFailed(false);
         console.log("successfully logged in");
+        setShowAlert(true);
+        setAlertType("success");
+        setAlertMessage("ログインしました");
         navigate("/app", {
           replace: true,
-          state: { message: "ログインしました", type: "success" },
+          //state: { message: "ログインしました", type: "success" },
         });
       }
       // ログイン失敗
       else {
         console.log("wrong password");
         setLoginFailed(true);
+        setShowAlert(true);
+        setAlertType("success");
+        setAlertMessage("ログインしました");
       }
     } catch (error) {
       console.error("エラーが発生しました", error);
@@ -48,16 +56,6 @@ const Login = ({ location }) => {
 
   return (
     <Container>
-      {location &&
-      location.state &&
-      location.state.message &&
-      location.state.type ? (
-        <div className="m-4">
-          <Alert variant={location.state.type}>{location.state.message}</Alert>
-        </div>
-      ) : (
-        <div></div>
-      )}
       {loginFailed ? (
         <div className="m-4">
           <Alert variant="danger">ログインできませんでした</Alert>

@@ -1,7 +1,8 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { Alert, Button, Card, Container, Form, } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { setAlertContext } from "../AlertContext";
 
 
 const Signup = () => {
@@ -11,6 +12,7 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [signupFailed, setSignupFailed] = useState(false);
 
+  const { setShowAlert, setAlertMessage, setAlertType } = useContext(setAlertContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -29,11 +31,13 @@ const Signup = () => {
         { headers: headers }
       );
       // サインアップ成功
-      if (response.status === 200) {
+      if (response.status === 201) {
         setSignupFailed(false);
+        setShowAlert(true);
+        setAlertType("success");
+        setAlertMessage("サインアップしました");
         navigate("/login", {
           replace: true,
-          state: { message: "サインアップしました", type: "success" },
         });
       }
       // サインアップ失敗
