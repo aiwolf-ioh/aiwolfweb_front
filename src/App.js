@@ -7,6 +7,7 @@ import HomePage from "./components/HomePage";
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Alert from './components/Alert';
+import Main from './components/Main';
 import { AuthProvider } from './AuthContext';
 import { AlertProvider } from './AlertContext';
 
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="signup" element={<Signup />} />
+                <Route path="/main" element={<Main />} />
               </Routes>
             <Footer/>
           </AlertProvider>
