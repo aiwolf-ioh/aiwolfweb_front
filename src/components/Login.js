@@ -2,14 +2,12 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Alert, Button, Card, Container, Form } from "react-bootstrap";
-import { AuthContext } from "../AuthContext";
 import { setAlertContext, AlertContext } from "../AlertContext";
 
-const Login = ({ location }) => {
+const Login = (props) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, isLoggedIn } = useContext(AuthContext);
   const { setShowAlert, setAlertMessage, setAlertType } = useContext(setAlertContext);
   const { showAlert } = useContext(AlertContext);
   const [loginFailed, setLoginFailed] = useState(false);
@@ -30,8 +28,8 @@ const Login = ({ location }) => {
 
       // ログイン成功
       if (response.status === 200) {
-        login();
-        console.log(isLoggedIn);
+        props.onLogin(response.data.token);
+        console.log(props.isLoggedIn);
         setLoginFailed(false);
         console.log("successfully logged in");
         setShowAlert(true);
@@ -53,7 +51,6 @@ const Login = ({ location }) => {
       setLoginFailed(true);
     }
   };
-  console.log(isLoggedIn);
   return (
     <Container>
       {loginFailed ? (

@@ -1,16 +1,14 @@
 import React, { useContext } from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { AuthContext } from "../AuthContext";
 import { setAlertContext } from "../AlertContext";
 
 
-const Header = () => {
-  const { logout, isLoggedIn } = useContext(AuthContext);
+const Header = (props) => {
   const { setShowAlert, setAlertMessage, setAlertType } = useContext(setAlertContext);
 
   const handleLogout = () => {
-    logout();
+    props.onLogout();
     setShowAlert(true);
     setAlertMessage("ログアウトしました");
     setAlertType("success");
@@ -20,15 +18,15 @@ const Header = () => {
     <Navbar bg="primary" expand="lg" variant="dark">
         <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ml-auto'>
-                <Nav.Link as={Link} to={isLoggedIn ? '/main' : '/'}>ホーム</Nav.Link>
+                <Nav.Link as={Link} to={props.isLoggedIn ? '/main' : '/'}>ホーム</Nav.Link>
                 <Nav.Link as={Link} to='/news'>お知らせ</Nav.Link>
                 {
-                  isLoggedIn ?
+                  props.isLoggedIn ?
                   <Nav.Link as={Link} to='/profile'>プロフィール</Nav.Link> :
                   <Nav.Link as={Link} to='/signup'>サインアップ</Nav.Link>
                 }
                 {
-                  isLoggedIn ?
+                  props.isLoggedIn ?
                   <Nav.Link as={Link} to='/' onClick={handleLogout}>ログアウト</Nav.Link> :
                   <Nav.Link as={Link} to='/login'>ログイン</Nav.Link>
                 }
