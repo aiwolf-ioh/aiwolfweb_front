@@ -51,7 +51,7 @@ function App() {
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
             <Route path="signup" element={<Signup />} />
             <Route path="/main" element={<Main isLoggedIn={isLoggedIn} token={token} />} />
-            <Route path="/newdata" element={<Newdata />} />
+            <Route path="/newdata" element={<Newdata token={token} />} />
           </Routes>
           <Footer />
         </AlertProvider>
