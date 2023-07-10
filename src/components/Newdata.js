@@ -1,17 +1,18 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { setAlertContext } from "../AlertContext";
 
 const Newdata = (props) => {
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
   const [data, setData] = useState(null);
   const [villageSize, setVillageSize] = useState("5");
-  const [memo, setMemo] = useState('');
+  const [memo, setMemo] = useState("");
   const [isVisibleFromLink, setIsVisibleFromLink] = useState(false);
-  
-  const { setShowAlert, setAlertMessage, setAlertType } = useContext(setAlertContext);
+
+  const { setShowAlert, setAlertMessage, setAlertType } =
+    useContext(setAlertContext);
   const navigate = useNavigate();
 
   const handleNameChange = (e) => {
@@ -21,7 +22,7 @@ const Newdata = (props) => {
   const handleDataChange = (e) => {
     const selectedFile = e.target.files[0];
     // ファイルが zip 形式であることを確認する
-    if (selectedFile && selectedFile.name.split('.').pop() === 'zip') {
+    if (selectedFile && selectedFile.name.split(".").pop() === "zip") {
       setData(selectedFile);
     } else {
       setData(null);
@@ -45,21 +46,20 @@ const Newdata = (props) => {
     e.preventDefault();
     try {
       const headers = {
-        "Content-Type": "application/json",
+        Authorization: `Token ${props.token}`,
       };
-      const token = props.token;
+      // FormData オブジェクトを作成
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("author", "4186390f-4dd7-4e83-ad9f-84d3443d38db");
+      formData.append("data_file", data); // Fileオブジェクトを追加
+      formData.append("num_people", villageSize);
+      formData.append("can_view", isVisibleFromLink);
+      formData.append("memo", memo);
       const response = await axios.post(
-        "https://aiwolf-web.herokuapp.com/api/matchdata",
-        /**TODO: 正しい形式でapiにpostする **
-         * トークン：token
-         * 対戦名：name
-         * 対戦データ(zip)：data
-         * 村の人数：villageSize
-         * メモ：memo
-         * リンクを知っている人が見られるか：isVisibleFromLink
-        {  },
-        */
-        {headers: headers}
+        "https://aiwolf-web.herokuapp.com/api/matchdata/",
+        formData,
+        { headers: headers }
       );
 
       // データの登録成功
@@ -85,7 +85,9 @@ const Newdata = (props) => {
         <hr />
         <Form.Group controlId="name" className="my-3">
           <div className="row">
-            <div className="col font-weight-bold"><Form.Label>対戦名：</Form.Label></div>
+            <div className="col font-weight-bold">
+              <Form.Label>対戦名：</Form.Label>
+            </div>
             <div className="col">
               <Form.Control
                 type="text"
@@ -99,7 +101,9 @@ const Newdata = (props) => {
         <hr />
         <Form.Group controlId="data" className="my-3">
           <div className="row">
-            <div className="col font-weight-bold"><Form.Label>対戦データ：</Form.Label></div>
+            <div className="col font-weight-bold">
+              <Form.Label>対戦データ：</Form.Label>
+            </div>
             <div className="col">
               <Form.Control
                 type="file"
@@ -113,7 +117,9 @@ const Newdata = (props) => {
         <hr />
         <Form.Group controlId="villageSize" className="my-3">
           <div className="row">
-            <div className="col font-weight-bold"><Form.Label>村の人数：</Form.Label></div>
+            <div className="col font-weight-bold">
+              <Form.Label>村の人数：</Form.Label>
+            </div>
             <div className="col">
               <Form.Control
                 as="select"
@@ -130,7 +136,9 @@ const Newdata = (props) => {
         <hr />
         <Form.Group controlId="memo" className="my-3">
           <div className="row">
-            <div className="col font-weight-bold"><Form.Label>メモ：</Form.Label></div>
+            <div className="col font-weight-bold">
+              <Form.Label>メモ：</Form.Label>
+            </div>
             <div className="col">
               <Form.Control
                 as="textarea"
@@ -143,7 +151,9 @@ const Newdata = (props) => {
         <hr />
         <Form.Group controlId="Visibility" className="my-3">
           <div className="row">
-            <div className="col font-weight-bold"><Form.Label>リンクで共有可能にする：</Form.Label></div>
+            <div className="col font-weight-bold">
+              <Form.Label>リンクで共有可能にする：</Form.Label>
+            </div>
             <div className="col">
               <Form.Check
                 type="checkbox"
@@ -153,13 +163,13 @@ const Newdata = (props) => {
             </div>
           </div>
         </Form.Group>
-        <hr align='center'/>
+        <hr align="center" />
         <Button variant="primary" type="submit">
           作成
         </Button>
       </Form>
     </Container>
   );
-}
+};
 
 export default Newdata;
