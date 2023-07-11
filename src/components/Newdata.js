@@ -48,10 +48,15 @@ const Newdata = (props) => {
       const headers = {
         Authorization: `Token ${props.token}`,
       };
+      const id_response = await axios.get(
+        "https://aiwolf-web.herokuapp.com/api/myself/",
+        { headers: headers }
+      );
+      const id = id_response.data.id;
       // FormData オブジェクトを作成
       const formData = new FormData();
       formData.append("name", name);
-      formData.append("author", "4186390f-4dd7-4e83-ad9f-84d3443d38db");
+      formData.append("author", id);
       formData.append("data_file", data); // Fileオブジェクトを追加
       formData.append("num_people", villageSize);
       formData.append("can_view", isVisibleFromLink);
