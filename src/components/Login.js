@@ -2,15 +2,14 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Alert, Button, Card, Container, Form } from "react-bootstrap";
-import { AuthContext } from "../AuthContext";
-import { setAlertContext } from "../AlertContext";
+import { setAlertContext, AlertContext } from "../AlertContext";
 
-const Login = ({ location }) => {
+const Login = (props) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useContext(AuthContext);
   const { setShowAlert, setAlertMessage, setAlertType } = useContext(setAlertContext);
+  const { showAlert } = useContext(AlertContext);
   const [loginFailed, setLoginFailed] = useState(false);
 
   // 送信したときに呼ばれる関数
@@ -29,16 +28,15 @@ const Login = ({ location }) => {
 
       // ログイン成功
       if (response.status === 200) {
-        login();
+        props.onLogin(response.data.token);
+        console.log(props.isLoggedIn);
         setLoginFailed(false);
         console.log("successfully logged in");
         setShowAlert(true);
+        console.log(showAlert);
         setAlertType("success");
         setAlertMessage("ログインしました");
-        navigate("/app", {
-          replace: true,
-          //state: { message: "ログインしました", type: "success" },
-        });
+        navigate("/main", { replace: true });
       }
       // ログイン失敗
       else {
@@ -53,7 +51,6 @@ const Login = ({ location }) => {
       setLoginFailed(true);
     }
   };
-
   return (
     <Container>
       {loginFailed ? (

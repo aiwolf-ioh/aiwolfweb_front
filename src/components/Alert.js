@@ -4,25 +4,17 @@ import { Alert as BootstrapAlert } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 
 const Alert = () => {
-  const { setShowAlert, setAlertCompleted, setAlertMessage, setAlertType } = useContext(setAlertContext);
+  const { setShowAlert, setAlertCompleted, /*setAlertMessage, setAlertType*/ } = useContext(setAlertContext);
   const { showAlert, alertCompleted, alertMessage, alertType } = useContext(AlertContext);
   const location = useLocation();
   var message = "", type = "";
-  /*
-  useEffect(
-    () => {
-      setShowAlert(false);
-      setAlertMessage("");
-      setAlertType("");
-    }
-  )
-  */
+
   useEffect(
     () => {
       if (showAlert) {
         if (alertCompleted) {
           setShowAlert(false);
-          setAlertCompleted(true);
+          setAlertCompleted(false);
         }
         else {
           setAlertCompleted(true);
