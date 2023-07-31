@@ -84,6 +84,19 @@ const Newdata = (props) => {
     }
   };
 
+  const test = async () => {
+    const headers = {
+      Authorization: `Token ${props.token}`,
+    };
+    const id_response = await axios.get(
+      "https://aiwolf-web.herokuapp.com/api/myself/",
+      { headers: headers }
+    );
+    console.log(id_response);
+  }
+
+  test();
+
   return (
     <Container className="mx-5 my-5">
       <Form onSubmit={handleSubmit}>
