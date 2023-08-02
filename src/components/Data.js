@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Button, Container, Table } from "react-bootstrap";
+import { Alert, Button, Container, Table } from "react-bootstrap";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import DataTable from "./DataTable";
@@ -10,6 +10,7 @@ const Data = (props) => {
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [uneditable, setUneditable] = useState(false);
 
   const { setShowAlert, setAlertMessage, setAlertType } = useContext(setAlertContext);
 
@@ -41,6 +42,28 @@ const Data = (props) => {
 
     const formattedDateTime = `${year}年${month}月${day}日${hours}:${minutes}`;
     return formattedDateTime;
+  }
+
+  // 編集ボタンが押されたとき
+  const handleEdit = async () => {
+    try {
+      const headers = {
+        Authorization: `Token ${props.token}`,
+      };
+      const id_response = await axios.get(
+        "https://aiwolf-web.herokuapp.com/api/myself/",
+        { headers: headers }
+      );
+      if (parseInt(id_response.status / 100) == 2) {
+        if (id_response.data.id !== data.author) {
+          setUneditable(true);
+        } else {
+          navigate("/edit", {state: { id: location.state.id, data: data }});
+        }
+      }
+    } catch (error) {
+      console.error("エラーが発生しました", error);
+    }
   }
 
   const handleDelete = async () => {
@@ -77,6 +100,8 @@ const Data = (props) => {
       </div>
       ) : (
         <div>
+          {uneditable && <Alert variant="warning">他の人のデータは編集できません</Alert>}
+          <div className="d-flex"><Button as={Link} to="/main" className="my-3 mr-auto">試合リストに戻る</Button></div>
           {data && data.analyzed_data &&
           <Table>
             <tbody>
@@ -119,7 +144,7 @@ const Data = (props) => {
             </tbody>
           </Table>
           }
-          <Button as={Link} to={"/edit"} state={{ id: location.state.id }} className="mx-3 my-4">
+          <Button onClick={handleEdit} className="mx-3 my-4">
             編集
           </Button>
           <Button onClick={() => setShowConfirmation(true)} className="mx-3 my-4 btn-dark">

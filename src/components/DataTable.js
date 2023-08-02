@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Table } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 import sortIcon from "../icons/icon_sort.png";
 import ascIcon from "../icons/icon_asc.png";
 import descIcon from "../icons/icon_desc.png";
@@ -54,7 +54,7 @@ const DataTable = (props) => {
 
   return (
     <div>
-      <a href="#" style={{ color: 'black', textDecoration: 'none' }} onClick={() => setVisible(!visible)}>{visible ? "▼" : "▶"}分析結果を確認</a>
+      <Button className="bg-transparent text-dark border-0 mb-2" style={{ textDecoration: 'none' }} onClick={() => setVisible(!visible)}>{visible ? "▼" : "▶"}分析結果を確認</Button>
       {visible && <Table striped bordered hover>
         <thead>
           {(type === "win" || type === "alive") ? (
