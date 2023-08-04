@@ -1,22 +1,33 @@
 import React, { useContext, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import { setAlertContext } from "../AlertContext";
 
 const Edit = (props) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  const [name, setName] = useState(null);
+  const [data, setData] = useState(null);
+  const [villageSize, setVillageSize] = useState(null);
+  const [memo, setMemo] = useState(null);
+  const [isVisibleFromLink, setIsVisibleFromLink] = useState(null);
+
+  const { setShowAlert, setAlertMessage, setAlertType } = useContext(setAlertContext);
+
+  if (!location.state) {
+    navigate(`/data/${id}`, {replace: true});
+    return;
+  }
 
   const currentData = location.state.data;
 
-  const [name, setName] = useState(currentData.name);
-  const [data, setData] = useState(null);
-  const [villageSize, setVillageSize] = useState(currentData.num_people);
-  const [memo, setMemo] = useState(currentData.memo);
-  const [isVisibleFromLink, setIsVisibleFromLink] = useState(currentData.can_view);
-
-  const { setShowAlert, setAlertMessage, setAlertType } = useContext(setAlertContext);
+  setName(currentData.name);
+  setVillageSize(currentData.num_people);
+  setMemo(currentData.memo);
+  setIsVisibleFromLink(currentData.can_view);
 
   const tmp = location.state.data.data_file.split("/").filter((item) => item.match(/.zip/))[0];
   const currentFileName = tmp.substr(0, tmp.indexOf('.zip') + 4);
@@ -63,7 +74,7 @@ const Edit = (props) => {
       formData.append("can_view", isVisibleFromLink);
       formData.append("memo", memo);
       const response = await axios.patch(
-        "https://aiwolf-web.herokuapp.com/api/matchdata/" + location.state.id,
+        "https://aiwolf-web.herokuapp.com/api/matchdata/" + currentData.id,
         formData,
         { headers: headers }
       );
@@ -87,97 +98,99 @@ const Edit = (props) => {
 
   return (
     <Container className="mx-5 my-5">
-      <Form onSubmit={handleSubmit}>
-        <hr />
-        <Form.Group controlId="name" className="my-3">
-          <div className="row">
-            <div className="col font-weight-bold">
-              <Form.Label>対戦名：</Form.Label>
+      {currentData && <div>
+        <Form onSubmit={handleSubmit}>
+          <hr />
+          <Form.Group controlId="name" className="my-3">
+            <div className="row">
+              <div className="col font-weight-bold">
+                <Form.Label>対戦名：</Form.Label>
+              </div>
+              <div className="col">
+                <Form.Control
+                  type="text"
+                  value={name}
+                  onChange={handleNameChange}
+                  required
+                />
+              </div>
             </div>
-            <div className="col">
-              <Form.Control
-                type="text"
-                value={name}
-                onChange={handleNameChange}
-                required
-              />
+          </Form.Group>
+          <hr />
+          <Form.Group controlId="data" className="my-3">
+            <div className="row">
+              <div className="col font-weight-bold">
+                <Form.Label>対戦データ：</Form.Label>
+              </div>
+              <div className="col">
+                <span>現在：<a href={currentData.data_file}>{currentFileName}</a></span>
+                <Form.Control
+                  type="file"
+                  accept=".zip"
+                  onChange={handleDataChange}
+                  required
+                />
+              </div>
             </div>
-          </div>
-        </Form.Group>
-        <hr />
-        <Form.Group controlId="data" className="my-3">
-          <div className="row">
-            <div className="col font-weight-bold">
-              <Form.Label>対戦データ：</Form.Label>
+          </Form.Group>
+          <hr />
+          <Form.Group controlId="villageSize" className="my-3">
+            <div className="row">
+              <div className="col font-weight-bold">
+                <Form.Label>村の人数：</Form.Label>
+              </div>
+              <div className="col">
+                <Form.Control
+                  as="select"
+                  value={villageSize}
+                  onChange={handleVillageSizeChange}
+                  required
+                >
+                  <option value="5">5</option>
+                  <option value="15">15</option>
+                </Form.Control>
+              </div>
             </div>
-            <div className="col">
-              <span>現在：<a href={currentData.data_file}>{currentFileName}</a></span>
-              <Form.Control
-                type="file"
-                accept=".zip"
-                onChange={handleDataChange}
-                required
-              />
+          </Form.Group>
+          <hr />
+          <Form.Group controlId="memo" className="my-3">
+            <div className="row">
+              <div className="col font-weight-bold">
+                <Form.Label>メモ：</Form.Label>
+              </div>
+              <div className="col">
+                <Form.Control
+                  as="textarea"
+                  value={memo}
+                  onChange={handleMemoChange}
+                />
+              </div>
             </div>
-          </div>
-        </Form.Group>
-        <hr />
-        <Form.Group controlId="villageSize" className="my-3">
-          <div className="row">
-            <div className="col font-weight-bold">
-              <Form.Label>村の人数：</Form.Label>
+          </Form.Group>
+          <hr />
+          <Form.Group controlId="Visibility" className="my-3">
+            <div className="row">
+              <div className="col font-weight-bold">
+                <Form.Label>リンクで共有可能にする：</Form.Label>
+              </div>
+              <div className="col">
+                <Form.Check
+                  type="checkbox"
+                  checked={isVisibleFromLink}
+                  onChange={handleVisibilityChange}
+                />
+              </div>
             </div>
-            <div className="col">
-              <Form.Control
-                as="select"
-                value={villageSize}
-                onChange={handleVillageSizeChange}
-                required
-              >
-                <option value="5">5</option>
-                <option value="15">15</option>
-              </Form.Control>
-            </div>
-          </div>
-        </Form.Group>
-        <hr />
-        <Form.Group controlId="memo" className="my-3">
-          <div className="row">
-            <div className="col font-weight-bold">
-              <Form.Label>メモ：</Form.Label>
-            </div>
-            <div className="col">
-              <Form.Control
-                as="textarea"
-                value={memo}
-                onChange={handleMemoChange}
-              />
-            </div>
-          </div>
-        </Form.Group>
-        <hr />
-        <Form.Group controlId="Visibility" className="my-3">
-          <div className="row">
-            <div className="col font-weight-bold">
-              <Form.Label>リンクで共有可能にする：</Form.Label>
-            </div>
-            <div className="col">
-              <Form.Check
-                type="checkbox"
-                checked={isVisibleFromLink}
-                onChange={handleVisibilityChange}
-              />
-            </div>
-          </div>
-        </Form.Group>
-        <hr align="center" />
-      </Form>
-      <Button onClick={handleSubmit} className="mx-3 my-4">
-        更新
-      </Button>
-      <Button onClick={() => navigate("/data", {state: { id: currentData.id }, replace: true})} className="mx-3 my-4 btn-dark">
-        キャンセル
-      </Button>
+          </Form.Group>
+          <hr align="center" />
+        </Form>
+        <Button onClick={handleSubmit} className="mx-3 my-4">
+          更新
+        </Button>
+        <Button onClick={() => navigate(`/data/${currentData.id}`, {replace: true})} className="mx-3 my-4 btn-dark">
+          キャンセル
+        </Button>
+      </div>}
     </Container>
   );
 };
