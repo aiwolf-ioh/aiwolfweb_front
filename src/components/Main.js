@@ -107,7 +107,7 @@ const Main = (props) => {
         </Button>
       </div>
       {currentItems.map((item) => (
-        <Card as={Link} to={"/data"} state={{ id: item.id }} key={item.id} className="text-dark">
+        <Card as={Link} to={`/data/${item.id}`} key={item.id} className="text-dark">
           <Card.Body>
           <div className="d-flex justify-content-between">
               <h5>{item.name}</h5>
