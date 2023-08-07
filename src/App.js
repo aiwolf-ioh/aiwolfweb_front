@@ -9,6 +9,7 @@ import Signup from './components/Signup';
 import Alert from './components/Alert';
 import Main from './components/Main';
 import Newdata from './components/Newdata';
+import Data from './components/Data';
 import { AlertProvider } from './AlertContext';
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
             <Route path="signup" element={<Signup />} />
             <Route path="/main" element={<Main isLoggedIn={isLoggedIn} token={token} />} />
             <Route path="/newdata" element={<Newdata token={token} />} />
+            <Route path="/data" element={<Data token={token} />} />
           </Routes>
           <Footer />
         </AlertProvider>
