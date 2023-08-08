@@ -21,11 +21,6 @@ const Main = (props) => {
     setCurrentPage(pageNumber);
   };
 
-  // 試合データのクリック
-  const handleCardClick = (item) => {
-    navigate("/data", { id: item.id })
-  }
-
   // 再レンダリングするかどうかを判断するためのもの
   const compareData = (prev, curr) => {
     if (prev === null || prev.length !== curr.length) {
@@ -36,6 +31,7 @@ const Main = (props) => {
 
   // apiから送られてくる全データ
   const fetchData = async () => {
+    if (!props.token) return;
     try {
       const headers = {
         Authorization: `Token ${props.token}`,
@@ -62,11 +58,12 @@ const Main = (props) => {
 
   // 自分が作成したデータ
   const filterData = (allData) => {
-    if (allData == null) {
+    if (allData == null || allData.length === 0) {
       return;
     }
     const myData = allData.filter((item) => item.author == id);
     setMyData(myData);
+    localStorage.setItem('matchData', JSON.stringify(myData));
   }
 
   // 日時を見やすく表示
@@ -93,6 +90,13 @@ const Main = (props) => {
     setTotalPages(Math.ceil(myData.length / itemsPerPage));
   }, [myData, currentPage]);
   
+  useEffect(() => {
+    const storedData = localStorage.getItem('matchData');
+    if (storedData) {
+      setMyData(JSON.parse(storedData));
+    }
+  }, []);
+
   fetchData();
 
   return (
@@ -103,7 +107,7 @@ const Main = (props) => {
         </Button>
       </div>
       {currentItems.map((item) => (
-        <Card as={Link} key={item.id} onClick={handleCardClick} className="text-dark">
+        <Card as={Link} to={`/data/${item.id}`} key={item.id} className="text-dark">
           <Card.Body>
           <div className="d-flex justify-content-between">
               <h5>{item.name}</h5>

@@ -10,6 +10,8 @@ import Alert from './components/Alert';
 import Main from './components/Main';
 import Newdata from './components/Newdata';
 import Profile from './components/Profile';
+import Data from './components/Data';
+import Edit from './components/Edit';
 import { AlertProvider } from './AlertContext';
 
 function App() {
@@ -50,10 +52,12 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage isLoggedIn={isLoggedIn} />} />
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
-            <Route path="signup" element={<Signup />} />
+            <Route path="/signup" element={<Signup />} />
             <Route path="/main" element={<Main isLoggedIn={isLoggedIn} token={token} />} />
             <Route path="/newdata" element={<Newdata token={token} />} />
             <Route path="/profile" element={<Profile token={token} />} />
+            <Route path="/data/:id" element={<Data token={token} />} />
+            <Route path="/edit/:id" element={<Edit token={token} />} />
           </Routes>
           <Footer />
         </AlertProvider>
