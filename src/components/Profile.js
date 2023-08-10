@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Alert, Button, Card, Container, Form, Table } from "react-bootstrap";
+import { Alert, /*Button,*/ Card, Container, /*Form,*/ Table } from "react-bootstrap";
 import axios from "axios";
 
 const Profile = (props) => {
@@ -8,7 +8,7 @@ const Profile = (props) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [editCompleted, setEditCompleted] = useState(false);
-
+  /*
   const handleNameChange = (e) => {
     setName(e.target.value);
   }
@@ -22,7 +22,6 @@ const Profile = (props) => {
     setName(profile.user_name);
     setEmail(profile.email);
   }
-  /*
   const handleEdit = async () => {
     try {
       const headers = {
@@ -60,10 +59,10 @@ const Profile = (props) => {
       console.error("エラーが発生しました", error);
     }
   };
-  
-  useEffect(() => {if (props.token) fetchData()}, [props.token]);
 
-  return(
+  useEffect(() => { if (props.token) fetchData() }, [props.token]);
+
+  return (
     <Container>
       {editCompleted && <Alert variant="success">プロフィールを更新しました</Alert>}
       {edit ? <div>{/*(<Card
@@ -135,10 +134,10 @@ const Profile = (props) => {
             {/*<Button onClick={() => {setEdit(true); setEditCompleted(false)}}>編集</Button>*/}
           </Card.Body>
         </Card>}
-        </div>)
+      </div>)
       }
     </Container>
-  )
-}
+  );
+};
 
 export default Profile;
