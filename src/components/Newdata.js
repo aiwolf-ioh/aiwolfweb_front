@@ -11,8 +11,7 @@ const Newdata = (props) => {
   const [memo, setMemo] = useState("");
   const [isVisibleFromLink, setIsVisibleFromLink] = useState(false);
 
-  const { setShowAlert, setAlertMessage, setAlertType } =
-    useContext(setAlertContext);
+  const { setShowAlert, setAlertMessage, setAlertType } = useContext(setAlertContext);
   const navigate = useNavigate();
 
   const handleNameChange = (e) => {
@@ -43,7 +42,6 @@ const Newdata = (props) => {
 
   // 登録時に呼ばれる関数
   const handleSubmit = async (e) => {
-    e.preventDefault();
     try {
       const headers = {
         Authorization: `Token ${props.token}`,
@@ -83,19 +81,6 @@ const Newdata = (props) => {
       console.error("エラーが発生しました", error);
     }
   };
-
-  const test = async () => {
-    const headers = {
-      Authorization: `Token ${props.token}`,
-    };
-    const id_response = await axios.get(
-      "https://aiwolf-web.herokuapp.com/api/myself/",
-      { headers: headers }
-    );
-    console.log(id_response);
-  }
-
-  test();
 
   return (
     <Container className="mx-5 my-5">
