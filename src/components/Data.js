@@ -41,8 +41,9 @@ const Data = (props) => {
     } catch (error) {
       console.error("エラーが発生しました", error);
     }
-  }
+  };
 
+  // 日時を見やすく表示
   const formatDateTime = (dateTimeString) => {
     const dateObject = new Date(dateTimeString);
     const year = dateObject.getFullYear();
@@ -53,7 +54,7 @@ const Data = (props) => {
 
     const formattedDateTime = `${year}年${month}月${day}日${hours < 10 ? "0" + hours : hours}:${minutes < 10 ? "0" + minutes : minutes}`;
     return formattedDateTime;
-  }
+  };
 
   // 編集ボタンが押されたとき
   const handleEdit = () => {
@@ -63,7 +64,7 @@ const Data = (props) => {
       setUneditable(true);
       setMessage("編集");
     }
-  }
+  };
 
   // 削除ボタンが押されたとき
   const handleDeletePressed = () => {
@@ -73,7 +74,7 @@ const Data = (props) => {
       setUneditable(true);
       setMessage("削除");
     }
-  }
+  };
 
   // 削除するとき
   const handleDelete = async () => {
@@ -94,7 +95,7 @@ const Data = (props) => {
     } catch (error) {
       console.error("エラーが発生しました", error);
     }
-  }
+  };
 
   useEffect(() => {
     fetchData();
@@ -176,7 +177,7 @@ const Data = (props) => {
         </div>)    
       }</div>)}
     </Container>
-  )
+  );
 };
 
 export default Data;
