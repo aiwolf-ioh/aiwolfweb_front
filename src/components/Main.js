@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Main = (props) => {
-  const itemsPerPage = 10;
+  const itemsPerPage = 10;  // 1ページに表示するデータ数
 
   const [data, setData] = useState([]);
   const [id, setId] = useState("");
@@ -27,7 +27,7 @@ const Main = (props) => {
       return false;
     }
     return true;
-  }
+  };
 
   // apiから送られてくる全データ
   const fetchData = async () => {
@@ -54,7 +54,7 @@ const Main = (props) => {
       console.error("エラーが発生しました", error);
       setData(null);
     }
-  }
+  };
 
   // 自分が作成したデータ
   const filterData = (allData) => {
@@ -63,8 +63,8 @@ const Main = (props) => {
     }
     const myData = allData.filter((item) => item.author == id);
     setMyData(myData);
-    localStorage.setItem('matchData', JSON.stringify(myData));
-  }
+    localStorage.setItem("matchData", JSON.stringify(myData));
+  };
 
   // 日時を見やすく表示
   const formatDateTime = (dateTimeString) => {
@@ -77,7 +77,7 @@ const Main = (props) => {
 
     const formattedDateTime = `${year}年${month}月${day}日${hours < 10 ? "0" + hours : hours}:${minutes < 10 ? "0" + minutes : minutes}`;
     return formattedDateTime;
-  }
+  };
 
   useEffect(() => {
     if (data != null) {
@@ -89,9 +89,9 @@ const Main = (props) => {
     setCurrentItems(myData.slice(firstIndex, lastIndex));
     setTotalPages(Math.ceil(myData.length / itemsPerPage));
   }, [myData, currentPage]);
-  
+
   useEffect(() => {
-    const storedData = localStorage.getItem('matchData');
+    const storedData = localStorage.getItem("matchData");
     if (storedData) {
       setMyData(JSON.parse(storedData));
     }
@@ -109,11 +109,11 @@ const Main = (props) => {
       {currentItems.map((item) => (
         <Card as={Link} to={`/data/${item.id}`} key={item.id} className="text-dark">
           <Card.Body>
-          <div className="d-flex justify-content-between">
+            <div className="d-flex justify-content-between">
               <h5>{item.name}</h5>
               <p className="text-right small">{formatDateTime(item.created_at)}</p>
-          </div>
-          <p className="text-left">{item.memo}</p>
+            </div>
+            <p className="text-left">{item.memo}</p>
           </Card.Body>
         </Card>
       ))}
@@ -132,7 +132,7 @@ const Main = (props) => {
         </Pagination>
       </div>
     </Container>
-  )
-}
+  );
+};
 
-export default Main
+export default Main;
