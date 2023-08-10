@@ -29,14 +29,14 @@ const Comment = (props) => {
       if (parseInt(user_response.status / 100) == 2) {
         const userIdMap = {};
         user_response.data.map((item) => {
-          userIdMap[item.id] = item.user_name
-        })
+          userIdMap[item.id] = item.user_name;
+        });
         setUsers(userIdMap);
       }
     } catch (error) {
       console.error("エラーが発生しました", error);
     }
-  }
+  };
 
   // 日時を見やすく表示
   const formatDateTime = (dateTimeString) => {
@@ -49,12 +49,14 @@ const Comment = (props) => {
 
     const formattedDateTime = `${year}年${month}月${day}日${hours < 10 ? "0" + hours : hours}:${minutes < 10 ? "0" + minutes : minutes}`;
     return formattedDateTime;
-  }
+  };
 
+  // 入力されたコメントを記録
   const handleNewCommentChange = (e) => {
     setNewComment(e.target.value);
   };
-  
+
+  // コメントを投稿
   const handlePost = async () => {
     try {
       const headers = {
@@ -72,7 +74,7 @@ const Comment = (props) => {
     } catch (error) {
       console.error("エラーが発生しました", error);
     }
-  }
+  };
 
   useEffect(() => {
     fetchData();
@@ -90,7 +92,7 @@ const Comment = (props) => {
                 <div className="my-3">コメントはありません</div>
                 <hr />
               </div>
-            ):(
+            ) : (
               <div style={{ width: "90%" }}>
                 {comments.map((item) => (
                   <div>
@@ -103,11 +105,11 @@ const Comment = (props) => {
                   </div>
                 ))}
               </div>
-            )}          
-            <Card style={{width: "80%"}} className="text-left mt-5 mb-4">
+            )}
+            <Card style={{ width: "80%" }} className="text-left mt-5 mb-4">
               <Card.Body>
                 <h5 className="font-weight-normal">投稿する</h5>
-                <div><textarea style={{width: "100%"}} value={newComment} placeholder="コメントを入力" onChange={handleNewCommentChange} /></div>
+                <div><textarea style={{ width: "100%" }} value={newComment} placeholder="コメントを入力" onChange={handleNewCommentChange} /></div>
                 <Button className="mt-2" onClick={handlePost}>投稿</Button>
               </Card.Body>
             </Card>
@@ -116,6 +118,6 @@ const Comment = (props) => {
       }
     </div>
   );
-}
+};
 
 export default Comment;
