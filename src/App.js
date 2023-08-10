@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Header from './components/Header';
-import Footer from './components/Footer';
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 import HomePage from "./components/HomePage";
-import Login from './components/Login';
-import Signup from './components/Signup';
-import Alert from './components/Alert';
-import Main from './components/Main';
-import Newdata from './components/Newdata';
-import Profile from './components/Profile';
-import Data from './components/Data';
-import Edit from './components/Edit';
-import { AlertProvider } from './AlertContext';
+import Login from "./components/Login";
+import Signup from "./components/Signup";
+import Alert from "./components/Alert";
+import Main from "./components/Main";
+import Newdata from "./components/Newdata";
+import Profile from "./components/Profile";
+import Data from "./components/Data";
+import Edit from "./components/Edit";
+import { AlertProvider } from "./AlertContext";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState("");
 
   useEffect(() => {
-    const storedLoginStatus = localStorage.getItem('isLoggedIn');
-    const storedToken = localStorage.getItem('token');
+    const storedLoginStatus = localStorage.getItem("isLoggedIn");
+    const storedToken = localStorage.getItem("token");
     if (storedLoginStatus) {
       setIsLoggedIn(JSON.parse(storedLoginStatus));
     }
@@ -32,15 +32,15 @@ function App() {
   const handleLogin = (token) => {
     setIsLoggedIn(true);
     setToken(token);
-    localStorage.setItem('isLoggedIn', JSON.stringify(true));
-    localStorage.setItem('token', JSON.stringify(token));
+    localStorage.setItem("isLoggedIn", JSON.stringify(true));
+    localStorage.setItem("token", JSON.stringify(token));
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    setToken('');
-    localStorage.setItem('isLoggedIn', JSON.stringify(false));
-    localStorage.setItem('token', JSON.stringify(''));
+    setToken("");
+    localStorage.setItem("isLoggedIn", JSON.stringify(false));
+    localStorage.setItem("token", JSON.stringify(""));
   };
 
   return (
@@ -64,6 +64,6 @@ function App() {
       </Router>
     </div>
   );
-}
+};
 
 export default App;
