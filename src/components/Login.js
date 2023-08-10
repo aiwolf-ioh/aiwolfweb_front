@@ -27,7 +27,7 @@ const Login = (props) => {
       );
 
       // ログイン成功
-      if (response.status === 200) {
+      if (parseInt(response.status / 100) == 2) {
         props.onLogin(response.data.token);
         console.log(props.isLoggedIn);
         setLoginFailed(false);
@@ -96,7 +96,7 @@ const Login = (props) => {
           </Form>
         </Card.Body>
         <a href="/signup" className="mb-4">
-        利用が初めての方はこちら
+          利用が初めての方はこちら
         </a>
       </Card>
     </Container>
