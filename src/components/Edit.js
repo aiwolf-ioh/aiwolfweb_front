@@ -18,7 +18,7 @@ const Edit = (props) => {
   const { setShowAlert, setAlertMessage, setAlertType } = useContext(setAlertContext);
 
   if (!location.state) {
-    navigate(`/data/${id}`, {replace: true});
+    navigate(`/data/${id}`, { replace: true });
     return;
   }
 
@@ -29,8 +29,9 @@ const Edit = (props) => {
   setMemo(currentData.memo);
   setIsVisibleFromLink(currentData.can_view);
 
+  // 登録時のファイル名を取得
   const tmp = location.state.data.data_file.split("/").filter((item) => item.match(/.zip/))[0];
-  const currentFileName = tmp.substr(0, tmp.indexOf('.zip') + 4);
+  const currentFileName = tmp.substr(0, tmp.indexOf(".zip") + 4);
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -187,7 +188,7 @@ const Edit = (props) => {
         <Button onClick={handleSubmit} className="mx-3 my-4">
           更新
         </Button>
-        <Button onClick={() => navigate(`/data/${currentData.id}`, {replace: true})} className="mx-3 my-4 btn-dark">
+        <Button onClick={() => navigate(`/data/${currentData.id}`, { replace: true })} className="mx-3 my-4 btn-dark">
           キャンセル
         </Button>
       </div>}
