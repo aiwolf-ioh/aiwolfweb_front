@@ -1,11 +1,12 @@
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { Alert, Button, Card, Container, Form } from "react-bootstrap";
 import { setAlertContext, AlertContext } from "../AlertContext";
 
 const Login = (props) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setShowAlert, setAlertMessage, setAlertType } = useContext(setAlertContext);
@@ -36,7 +37,11 @@ const Login = (props) => {
         console.log(showAlert);
         setAlertType("success");
         setAlertMessage("ログインしました");
-        navigate("/main", { replace: true });
+        var moveTo = "/main";
+        if (location.state && location.state.to) {
+          moveTo = location.state.to;
+        }
+        navigate(moveTo, { replace: true });
       }
       // ログイン失敗
       else {

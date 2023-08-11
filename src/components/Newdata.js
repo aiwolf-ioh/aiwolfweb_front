@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -81,6 +81,12 @@ const Newdata = (props) => {
       console.error("エラーが発生しました", error);
     }
   };
+
+  useEffect(() => {
+    if (props.isLoggedIn !== undefined && !props.isLoggedIn) {
+      navigate("/login", {state: { to: "/newdata" }});
+    }
+  }, [props.isLoggedIn]);
 
   return (
     <Container className="mx-5 my-5">

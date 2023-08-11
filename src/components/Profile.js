@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Alert, /*Button,*/ Card, Container, /*Form,*/ Table } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Profile = (props) => {
+  const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [edit, setEdit] = useState(false);
   const [name, setName] = useState("");
@@ -61,6 +63,12 @@ const Profile = (props) => {
   };
 
   useEffect(() => { if (props.token) fetchData() }, [props.token]);
+
+  useEffect(() => {
+    if (props.isLoggedIn !== undefined && !props.isLoggedIn) {
+      navigate("/login", {state: { to: "/profile" }});
+    }
+  }, [props.isLoggedIn]);
 
   return (
     <Container>

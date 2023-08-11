@@ -54,9 +54,9 @@ function App() {
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/main" element={<Main isLoggedIn={isLoggedIn} token={token} />} />
-            <Route path="/newdata" element={<Newdata token={token} />} />
-            <Route path="/profile" element={<Profile token={token} />} />
-            <Route path="/data/:id" element={<Data token={token} />} />
+            <Route path="/newdata" element={<Newdata isLoggedIn={isLoggedIn} token={token} />} />
+            <Route path="/profile" element={<Profile isLoggedIn={isLoggedIn} token={token} />} />
+            <Route path="/data/:id" element={<Data isLoggedIn={isLoggedIn} token={token} />} />
             <Route path="/edit/:id" element={<Edit token={token} />} />
           </Routes>
           <Footer />

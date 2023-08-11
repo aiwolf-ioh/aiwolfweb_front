@@ -107,6 +107,12 @@ const Data = (props) => {
     }
   }, [userId, data]);
 
+  useEffect(() => {
+    if (props.isLoggedIn !== undefined && !props.isLoggedIn) {
+      navigate("/login", {state: { to: `/data/${id}` }});
+    }
+  }, [props.isLoggedIn]);
+
   return (
     <Container className="mx-5 my-5">
       {inVisible ?

@@ -6,6 +6,7 @@ import axios from "axios";
 const Main = (props) => {
   const itemsPerPage = 10;  // 1ページに表示するデータ数
 
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [id, setId] = useState("");
   const [myData, setMyData] = useState([]);
@@ -14,7 +15,6 @@ const Main = (props) => {
   const [totalPages, setTotalPages] = useState(0);
   const lastIndex = currentPage * itemsPerPage;
   const firstIndex = lastIndex - itemsPerPage;
-  const navigate = useNavigate();
 
   // Paginationのクリック
   const handlePageChange = (pageNumber) => {
@@ -96,6 +96,12 @@ const Main = (props) => {
       setMyData(JSON.parse(storedData));
     }
   }, []);
+
+  useEffect(() => {
+    if (props.isLoggedIn !== undefined && !props.isLoggedIn) {
+      navigate("/login");
+    }
+  }, [props.isLoggedIn]);
 
   fetchData();
 
