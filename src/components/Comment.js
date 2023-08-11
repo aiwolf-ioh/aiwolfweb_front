@@ -18,7 +18,7 @@ const Comment = (props) => {
         "https://aiwolf-web.herokuapp.com/api/comment/",
         { headers: headers }
       );
-      if (parseInt(comment_response.status / 100) == 2) {
+      if (parseInt(comment_response.status / 100) === 2) {
         const filteredComments = comment_response.data.filter((item) => item.match_data === dataId);
         setComments(filteredComments);
       }
@@ -26,7 +26,7 @@ const Comment = (props) => {
         "https://aiwolf-web.herokuapp.com/api/user/",
         { headers: headers }
       );
-      if (parseInt(user_response.status / 100) == 2) {
+      if (parseInt(user_response.status / 100) === 2) {
         const userIdMap = {};
         user_response.data.map((item) => {
           userIdMap[item.id] = item.user_name;
@@ -67,7 +67,7 @@ const Comment = (props) => {
         { author: userId, content: newComment, match_data: dataId },
         { headers: headers }
       );
-      if (parseInt(response.status / 100) == 2) {
+      if (parseInt(response.status / 100) === 2) {
         setNewComment("");
         fetchData();
       }

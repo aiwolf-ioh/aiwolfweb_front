@@ -40,14 +40,14 @@ const Main = (props) => {
         "https://aiwolf-web.herokuapp.com/api/myself/",
         { headers: headers }
       );
-      if (parseInt(id_response.status / 100) == 2) {
+      if (parseInt(id_response.status / 100) === 2) {
         setId(id_response.data.id);
       }
       const response = await axios.get(
         "https://aiwolf-web.herokuapp.com/api/matchdata/",
         { headers: headers }
       );
-      if (parseInt(response.status / 100) == 2 && !compareData(data, response.data)) {
+      if (parseInt(response.status / 100) === 2 && !compareData(data, response.data)) {
         setData(response.data.reverse());
       }
     } catch (error) {
@@ -58,10 +58,10 @@ const Main = (props) => {
 
   // 自分が作成したデータ
   const filterData = (allData) => {
-    if (allData == null || allData.length === 0) {
+    if (allData === null || allData.length === 0) {
       return;
     }
-    const myData = allData.filter((item) => item.author == id);
+    const myData = allData.filter((item) => item.author === id);
     setMyData(myData);
     localStorage.setItem("matchData", JSON.stringify(myData));
   };
@@ -80,7 +80,7 @@ const Main = (props) => {
   };
 
   useEffect(() => {
-    if (data != null) {
+    if (data !== null) {
       filterData(data);
     }
   }, [data]);

@@ -28,14 +28,14 @@ const Data = (props) => {
         "https://aiwolf-web.herokuapp.com/api/myself/",
         { headers: headers }
       );
-      if (parseInt(id_response.status / 100) == 2) {
+      if (parseInt(id_response.status / 100) === 2) {
         setUserId(id_response.data.id);
       }
       const response = await axios.get(
         "https://aiwolf-web.herokuapp.com/api/matchdata/" + id,
         { headers: headers }
       );
-      if (parseInt(response.status / 100) == 2) {
+      if (parseInt(response.status / 100) === 2) {
         setData(response.data);
       }
     } catch (error) {
@@ -86,7 +86,7 @@ const Data = (props) => {
         "https://aiwolf-web.herokuapp.com/api/matchdata/" + id,
         { headers: headers }
       );
-      if (parseInt(response.status / 100) == 2) {
+      if (parseInt(response.status / 100) === 2) {
         setAlertType("warning");
         setAlertMessage(`試合データ${data.name}を削除しました`);
         setShowAlert(true);

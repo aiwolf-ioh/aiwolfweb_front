@@ -34,7 +34,7 @@ const Profile = (props) => {
         { id: profile.id, user_name: name, email: email },
         { headers: headers }
       );
-      if (parseInt(response.status / 100) == 2) {
+      if (parseInt(response.status / 100) === 2) {
         setEdit(false);
         setEditCompleted(true);
       }
@@ -52,7 +52,7 @@ const Profile = (props) => {
         "https://aiwolf-web.herokuapp.com/api/myself/",
         { headers: headers }
       );
-      if (parseInt(response.status / 100) == 2) {
+      if (parseInt(response.status / 100) === 2) {
         setProfile(response.data);
         setName(response.data.user_name);
         setEmail(response.data.email);

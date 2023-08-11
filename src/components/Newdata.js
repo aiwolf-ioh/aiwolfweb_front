@@ -66,7 +66,7 @@ const Newdata = (props) => {
       );
 
       // データの登録成功
-      if (parseInt(response.status / 100) == 2) {
+      if (parseInt(response.status / 100) === 2) {
         console.log("successfully post");
         setShowAlert(true);
         setAlertType("success");

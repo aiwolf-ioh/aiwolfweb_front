@@ -30,7 +30,7 @@ const Signup = () => {
         { headers: headers }
       );
       // サインアップ成功
-      if (parseInt(response.status / 100) == 2) {
+      if (parseInt(response.status / 100) === 2) {
         setSignupFailed(false);
         setShowAlert(true);
         setAlertType("success");

@@ -28,7 +28,7 @@ const Login = (props) => {
       );
 
       // ログイン成功
-      if (parseInt(response.status / 100) == 2) {
+      if (parseInt(response.status / 100) === 2) {
         props.onLogin(response.data.token);
         console.log(props.isLoggedIn);
         setLoginFailed(false);
