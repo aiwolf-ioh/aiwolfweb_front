@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import DataTable from "./DataTable";
 import { setAlertContext } from "../AlertContext";
+import Comment from "./Comment";
 
 const Data = (props) => {
   const navigate = useNavigate();
@@ -50,7 +51,7 @@ const Data = (props) => {
     const hours = dateObject.getHours();
     const minutes = dateObject.getMinutes();
 
-    const formattedDateTime = `${year}年${month}月${day}日${hours}:${minutes}`;
+    const formattedDateTime = `${year}年${month}月${day}日${hours < 10 ? "0" + hours : hours}:${minutes < 10 ? "0" + minutes : minutes}`;
     return formattedDateTime;
   }
 
@@ -169,6 +170,7 @@ const Data = (props) => {
             <Button onClick={() => handleDeletePressed(true)} className="mx-3 my-4 btn-dark">
               削除
             </Button>
+            {props.token && id && userId && <Comment token={props.token} id={id} userId={userId} />}
           </div>
           }
         </div>)    

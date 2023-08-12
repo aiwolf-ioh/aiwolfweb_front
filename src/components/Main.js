@@ -75,7 +75,7 @@ const Main = (props) => {
     const hours = dateObject.getHours();
     const minutes = dateObject.getMinutes();
 
-    const formattedDateTime = `${year}年${month}月${day}日${hours}:${minutes}`;
+    const formattedDateTime = `${year}年${month}月${day}日${hours < 10 ? "0" + hours : hours}:${minutes < 10 ? "0" + minutes : minutes}`;
     return formattedDateTime;
   }
 
