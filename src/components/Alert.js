@@ -4,11 +4,11 @@ import { Alert as BootstrapAlert } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 
 const Alert = () => {
-  const { setShowAlert, setAlertCompleted, /*setAlertMessage, setAlertType*/ } = useContext(setAlertContext);
+  const { setShowAlert, setAlertCompleted } = useContext(setAlertContext);
   const { showAlert, alertCompleted, alertMessage, alertType } = useContext(AlertContext);
   const location = useLocation();
-  var message = "", type = "";
 
+  // ページ遷移したらアラートを消す
   useEffect(
     () => {
       if (showAlert) {
@@ -23,18 +23,15 @@ const Alert = () => {
     }, [location]
   );
 
-  if (showAlert) {
-    message = alertMessage;
-    type = alertType;
-    return (
-      <div className="m-4">
-        <BootstrapAlert variant={type}>{message}</BootstrapAlert>
-      </div>
-    );
-  }
-  else {
-    return (<div></div>);
-  }
-}
+  return (
+    <div>
+      {showAlert ? (
+        <div className="m-4">
+          <BootstrapAlert variant={alertType}>{alertMessage}</BootstrapAlert>
+        </div>
+      ) : (<div></div>)}
+    </div>
+  );
+};
 
 export default Alert;

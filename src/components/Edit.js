@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
@@ -17,20 +17,20 @@ const Edit = (props) => {
 
   const { setShowAlert, setAlertMessage, setAlertType } = useContext(setAlertContext);
 
-  if (!location.state) {
-    navigate(`/data/${id}`, {replace: true});
-    return;
-  }
+  const currentData = location.state ? location.state.data : null;
+  
+  useEffect(() => {
+    if (currentData) {
+      setName(currentData.name);
+      setVillageSize(currentData.num_people);
+      setMemo(currentData.memo);
+      setIsVisibleFromLink(currentData.can_view);
+    }
+  }, [currentData]);
 
-  const currentData = location.state.data;
-
-  setName(currentData.name);
-  setVillageSize(currentData.num_people);
-  setMemo(currentData.memo);
-  setIsVisibleFromLink(currentData.can_view);
-
-  const tmp = location.state.data.data_file.split("/").filter((item) => item.match(/.zip/))[0];
-  const currentFileName = tmp.substr(0, tmp.indexOf('.zip') + 4);
+  // 登録時のファイル名を取得
+  const tmp = location.state ? location.state.data.data_file.split("/").filter((item) => item.match(/.zip/))[0] : "";
+  const currentFileName = tmp.substr(0, tmp.indexOf(".zip") + 4);
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -80,7 +80,7 @@ const Edit = (props) => {
       );
 
       // データの登録成功
-      if (parseInt(response.status / 100) == 2) {
+      if (parseInt(response.status / 100) === 2) {
         console.log("successfully edited");
         setShowAlert(true);
         setAlertType("success");
@@ -95,6 +95,12 @@ const Edit = (props) => {
       console.error("エラーが発生しました", error);
     }
   };
+
+  useEffect(() => {
+    if (location.state !== undefined && !location.state) {
+      navigate(`/data/${id}`, { replace: true });
+    }
+  }, [location.state]);
 
   return (
     <Container className="mx-5 my-5">
@@ -187,7 +193,7 @@ const Edit = (props) => {
         <Button onClick={handleSubmit} className="mx-3 my-4">
           更新
         </Button>
-        <Button onClick={() => navigate(`/data/${currentData.id}`, {replace: true})} className="mx-3 my-4 btn-dark">
+        <Button onClick={() => navigate(`/data/${currentData.id}`, { replace: true })} className="mx-3 my-4 btn-dark">
           キャンセル
         </Button>
       </div>}

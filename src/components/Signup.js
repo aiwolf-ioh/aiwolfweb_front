@@ -1,15 +1,14 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useState } from "react";
 import { Alert, Button, Card, Container, Form, } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { setAlertContext } from "../AlertContext";
 
-
 const Signup = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [signupFailed, setSignupFailed] = useState(false);
 
   const { setShowAlert, setAlertMessage, setAlertType } = useContext(setAlertContext);
@@ -31,7 +30,7 @@ const Signup = () => {
         { headers: headers }
       );
       // サインアップ成功
-      if (response.status === 201) {
+      if (parseInt(response.status / 100) === 2) {
         setSignupFailed(false);
         setShowAlert(true);
         setAlertType("success");
@@ -68,7 +67,7 @@ const Signup = () => {
           <Card.Title className="font-weight-normal mb-4 mt-3">
             サインアップ
           </Card.Title>
-          <Form style={{ width: '18rem' }}>
+          <Form style={{ width: "18rem" }}>
             <Form.Group controlId="name">
               <Form.Control
                 type="text"
@@ -122,6 +121,6 @@ const Signup = () => {
       </Card>
     </Container>
   );
-}
+};
 
 export default Signup;

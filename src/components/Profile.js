@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Alert, Button, Card, Container, Form, Table } from "react-bootstrap";
+import { Alert, /*Button,*/ Card, Container, /*Form,*/ Table } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Profile = (props) => {
+  const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [edit, setEdit] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [editCompleted, setEditCompleted] = useState(false);
-
+  /*
   const handleNameChange = (e) => {
     setName(e.target.value);
   }
@@ -22,7 +24,6 @@ const Profile = (props) => {
     setName(profile.user_name);
     setEmail(profile.email);
   }
-  /*
   const handleEdit = async () => {
     try {
       const headers = {
@@ -33,7 +34,7 @@ const Profile = (props) => {
         { id: profile.id, user_name: name, email: email },
         { headers: headers }
       );
-      if (parseInt(response.status / 100) == 2) {
+      if (parseInt(response.status / 100) === 2) {
         setEdit(false);
         setEditCompleted(true);
       }
@@ -51,7 +52,7 @@ const Profile = (props) => {
         "https://aiwolf-web.herokuapp.com/api/myself/",
         { headers: headers }
       );
-      if (parseInt(response.status / 100) == 2) {
+      if (parseInt(response.status / 100) === 2) {
         setProfile(response.data);
         setName(response.data.user_name);
         setEmail(response.data.email);
@@ -60,10 +61,16 @@ const Profile = (props) => {
       console.error("エラーが発生しました", error);
     }
   };
-  
-  useEffect(() => {if (props.token) fetchData()}, [props.token]);
 
-  return(
+  useEffect(() => { if (props.token) fetchData() }, [props.token]);
+
+  useEffect(() => {
+    if (props.isLoggedIn !== undefined && !props.isLoggedIn) {
+      navigate("/login", {state: { to: "/profile" }});
+    }
+  }, [props.isLoggedIn]);
+
+  return (
     <Container>
       {editCompleted && <Alert variant="success">プロフィールを更新しました</Alert>}
       {edit ? <div>{/*(<Card
@@ -135,10 +142,10 @@ const Profile = (props) => {
             {/*<Button onClick={() => {setEdit(true); setEditCompleted(false)}}>編集</Button>*/}
           </Card.Body>
         </Card>}
-        </div>)
+      </div>)
       }
     </Container>
-  )
-}
+  );
+};
 
 export default Profile;

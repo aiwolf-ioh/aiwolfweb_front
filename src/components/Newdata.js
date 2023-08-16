@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -11,8 +11,7 @@ const Newdata = (props) => {
   const [memo, setMemo] = useState("");
   const [isVisibleFromLink, setIsVisibleFromLink] = useState(false);
 
-  const { setShowAlert, setAlertMessage, setAlertType } =
-    useContext(setAlertContext);
+  const { setShowAlert, setAlertMessage, setAlertType } = useContext(setAlertContext);
   const navigate = useNavigate();
 
   const handleNameChange = (e) => {
@@ -43,7 +42,6 @@ const Newdata = (props) => {
 
   // 登録時に呼ばれる関数
   const handleSubmit = async (e) => {
-    e.preventDefault();
     try {
       const headers = {
         Authorization: `Token ${props.token}`,
@@ -68,7 +66,7 @@ const Newdata = (props) => {
       );
 
       // データの登録成功
-      if (parseInt(response.status / 100) == 2) {
+      if (parseInt(response.status / 100) === 2) {
         console.log("successfully post");
         setShowAlert(true);
         setAlertType("success");
@@ -84,18 +82,11 @@ const Newdata = (props) => {
     }
   };
 
-  const test = async () => {
-    const headers = {
-      Authorization: `Token ${props.token}`,
-    };
-    const id_response = await axios.get(
-      "https://aiwolf-web.herokuapp.com/api/myself/",
-      { headers: headers }
-    );
-    console.log(id_response);
-  }
-
-  test();
+  useEffect(() => {
+    if (props.isLoggedIn !== undefined && !props.isLoggedIn) {
+      navigate("/login", {state: { to: "/newdata" }});
+    }
+  }, [props.isLoggedIn]);
 
   return (
     <Container className="mx-5 my-5">

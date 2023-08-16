@@ -28,21 +28,22 @@ const Data = (props) => {
         "https://aiwolf-web.herokuapp.com/api/myself/",
         { headers: headers }
       );
-      if (parseInt(id_response.status / 100) == 2) {
+      if (parseInt(id_response.status / 100) === 2) {
         setUserId(id_response.data.id);
       }
       const response = await axios.get(
         "https://aiwolf-web.herokuapp.com/api/matchdata/" + id,
         { headers: headers }
       );
-      if (parseInt(response.status / 100) == 2) {
+      if (parseInt(response.status / 100) === 2) {
         setData(response.data);
       }
     } catch (error) {
       console.error("エラーが発生しました", error);
     }
-  }
+  };
 
+  // 日時を見やすく表示
   const formatDateTime = (dateTimeString) => {
     const dateObject = new Date(dateTimeString);
     const year = dateObject.getFullYear();
@@ -53,7 +54,7 @@ const Data = (props) => {
 
     const formattedDateTime = `${year}年${month}月${day}日${hours < 10 ? "0" + hours : hours}:${minutes < 10 ? "0" + minutes : minutes}`;
     return formattedDateTime;
-  }
+  };
 
   // 編集ボタンが押されたとき
   const handleEdit = () => {
@@ -63,7 +64,7 @@ const Data = (props) => {
       setUneditable(true);
       setMessage("編集");
     }
-  }
+  };
 
   // 削除ボタンが押されたとき
   const handleDeletePressed = () => {
@@ -73,7 +74,7 @@ const Data = (props) => {
       setUneditable(true);
       setMessage("削除");
     }
-  }
+  };
 
   // 削除するとき
   const handleDelete = async () => {
@@ -85,7 +86,7 @@ const Data = (props) => {
         "https://aiwolf-web.herokuapp.com/api/matchdata/" + id,
         { headers: headers }
       );
-      if (parseInt(response.status / 100) == 2) {
+      if (parseInt(response.status / 100) === 2) {
         setAlertType("warning");
         setAlertMessage(`試合データ${data.name}を削除しました`);
         setShowAlert(true);
@@ -94,7 +95,7 @@ const Data = (props) => {
     } catch (error) {
       console.error("エラーが発生しました", error);
     }
-  }
+  };
 
   useEffect(() => {
     fetchData();
@@ -105,6 +106,12 @@ const Data = (props) => {
       setInvisible(true);
     }
   }, [userId, data]);
+
+  useEffect(() => {
+    if (props.isLoggedIn !== undefined && !props.isLoggedIn) {
+      navigate("/login", {state: { to: `/data/${id}` }});
+    }
+  }, [props.isLoggedIn]);
 
   return (
     <Container className="mx-5 my-5">
@@ -176,7 +183,7 @@ const Data = (props) => {
         </div>)    
       }</div>)}
     </Container>
-  )
+  );
 };
 
 export default Data;
