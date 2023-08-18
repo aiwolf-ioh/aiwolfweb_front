@@ -32,7 +32,7 @@ const Data = (props) => {
         setUserId(id_response.data.id);
       }
       const response = await axios.get(
-        "https://aiwolf-web.herokuapp.com/api/matchdata/" + id,
+        "https://aiwolf-web.herokuapp.com/api/matchdata/" + id + "/",
         { headers: headers }
       );
       if (parseInt(response.status / 100) === 2) {
@@ -83,7 +83,7 @@ const Data = (props) => {
         Authorization: `Token ${props.token}`,
       };
       const response = await axios.delete(
-        "https://aiwolf-web.herokuapp.com/api/matchdata/" + id,
+        "https://aiwolf-web.herokuapp.com/api/matchdata/" + id + "/",
         { headers: headers }
       );
       if (parseInt(response.status / 100) === 2) {

@@ -74,7 +74,7 @@ const Edit = (props) => {
       formData.append("can_view", isVisibleFromLink);
       formData.append("memo", memo);
       const response = await axios.patch(
-        "https://aiwolf-web.herokuapp.com/api/matchdata/" + currentData.id,
+        "https://aiwolf-web.herokuapp.com/api/matchdata/" + currentData.id + "/",
         formData,
         { headers: headers }
       );
