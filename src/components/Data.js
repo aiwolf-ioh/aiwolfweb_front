@@ -114,7 +114,7 @@ const Data = (props) => {
   }, [props.isLoggedIn]);
 
   return (
-    <Container className="mx-5 my-5">
+    <Container className="my-5">
       {inVisible ?
       (<div>
         このデータへのアクセスが許可されていません

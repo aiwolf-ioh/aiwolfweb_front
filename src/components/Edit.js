@@ -103,7 +103,7 @@ const Edit = (props) => {
   }, [location.state]);
 
   return (
-    <Container className="mx-5 my-5">
+    <Container className="my-5">
       {currentData && <div>
         <Form onSubmit={handleSubmit}>
           <hr />
