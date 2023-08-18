@@ -28,7 +28,7 @@ const Comment = (props) => {
       );
       if (parseInt(user_response.status / 100) === 2) {
         const userIdMap = {};
-        user_response.data.map((item) => {
+        user_response.data.array.foreach((item) => {
           userIdMap[item.id] = item.user_name;
         });
         setUsers(userIdMap);
