@@ -106,7 +106,7 @@ const Main = (props) => {
   fetchData();
 
   return (
-    <Container className="mt-5 mb-5">
+    <Container className="my-5">
       <div className="d-flex">
         <Button as={Link} to={"/newdata"} className="ml-auto my-4">
           新規作成

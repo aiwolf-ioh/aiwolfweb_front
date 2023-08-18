@@ -28,7 +28,7 @@ const Comment = (props) => {
       );
       if (parseInt(user_response.status / 100) === 2) {
         const userIdMap = {};
-        user_response.data.array.foreach((item) => {
+        user_response.data.forEach((item) => {
           userIdMap[item.id] = item.user_name;
         });
         setUsers(userIdMap);
@@ -95,7 +95,7 @@ const Comment = (props) => {
             ) : (
               <div style={{ width: "90%" }}>
                 {comments.map((item) => (
-                  <div>
+                  <div key={item.id}>
                     <div className="d-flex justify-content-between">
                       <h5>{users[item.author] ? users[item.author] : "anonymous"}</h5>
                       <p className="text-right small">{formatDateTime(item.created_at)}</p>

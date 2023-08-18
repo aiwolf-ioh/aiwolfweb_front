@@ -89,7 +89,7 @@ const Newdata = (props) => {
   }, [props.isLoggedIn]);
 
   return (
-    <Container className="mx-5 my-5">
+    <Container className="my-5">
       <Form onSubmit={handleSubmit}>
         <hr />
         <Form.Group controlId="name" className="my-3">
